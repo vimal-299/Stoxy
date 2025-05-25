@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;      
+  -ms-overflow-style: none;   
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;              
+}
+
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #6425FE;
+  }
+  100% {
+    background-color: #A25BFF;
+  }
+}
+
+.pulse-bg {
+  animation: pulse-bg 1s infinite alternate;
+}
+
+.shadow-custom {
+  box-shadow: 0 0 15px 5px rgba(100, 37, 254, 0.6);
+}
