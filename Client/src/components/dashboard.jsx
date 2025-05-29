@@ -124,7 +124,7 @@ const dashboard = () => {
                             <span onClick={handleworst} className={`px-2 text-center text-base md:text-lg rounded-xl ${worst ? "bg-black text-white" : "bg-white"}`}>My Worst Performing</span>
                         </div>
                         <div className='overflow-y-auto' >
-                            {best ? (
+                            {best && (
                                 <div className='gap-4'>
                                     {best_hold.map((value, index) => (
                                         <Link to={`/stocks/${value.stock}`} key={index}>
@@ -143,9 +143,9 @@ const dashboard = () => {
                                         </Link>
                                     ))}
                                 </div>
-                            ):(<div className='text-center mt-10 font-medium'>No holdings found</div>)
+                            )
                             }
-                            {worst ? (
+                            {worst && (
                                 <div className='gap-4'>
                                     {worst_hold.map((value, index) => (
                                         <Link to={`/stocks/${value.stock}`} key={index}>
@@ -164,7 +164,7 @@ const dashboard = () => {
                                         </Link>
                                     ))}
                                 </div>
-                            ):(<div className='text-center mt-10 font-medium'>No holdings found</div>)
+                            )
                             }
                         </div>
                     </div>
