@@ -69,9 +69,15 @@ const dashboard = () => {
         const sortedHoldings = [...holdings].sort((a, b) => a.total_percent_change - b.total_percent_change);
         setworst_hold(sortedHoldings);
     }
+    const mockholdings = [
+        { stock: "AAPL", fullname: "Apple Inc.", currentprice: 150, day_percent_change: 1.5 },
+        // { stock: "GOOGL", fullname: "Alphabet Inc.", currentprice: 2800, day_percent_change: -0.5 },
+        // { stock: "AMZN", fullname: "Amazon.com Inc.", currentprice: 3400, day_percent_change: 2.0 },
+        // { stock: "MSFT", fullname: "Microsoft Corporation", currentprice: 300, day_percent_change: 1.2 }
+    ];
 
     return (
-        <div className="h-screen w-screen bg-[#F7F6F9]">
+        <div className="min-h-screen h-full w-screen bg-[#F7F6F9]">
             <Navbar ref={searchInputRef} />
             <div>
                 <p className="ml-14 mt-3 text-lg">
@@ -80,6 +86,7 @@ const dashboard = () => {
 
                 <div className="w-[90vw] h-[20vh] mt-2 p-2 flex justify-center justify-self-center items-center shadow-md bg-white border-solid border-[1px] border-gray-300 rounded-lg">
                     <div className="stockcards gap-4 flex overflow-x-scroll items-center scrollbar-hidden self-center scroll-smooth">
+                        {holdings.length === 0 && (<div className='text-center text-gray-500'>Your portfolio is currently empty!</div>)}
                         {holdings.map((value, index) => (
                             <Link to={`/stocks/${value.stock}`} key={index}>
                                 <Stockcard
@@ -94,9 +101,9 @@ const dashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-center mx-8 md:m-5 h-[58vh] gap-6">
+                <div className="flex mt-5 flex-col md:flex-row justify-center mx-8 md:m-5 gap-6">
 
-                    <div className="bg-white md:w-[30vw] rounded-lg p-2 border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                    <div className="bg-white md:w-[30vw] md:h-[60vh] rounded-lg p-2 border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
 
                         <p className="text-lg p-4">Current</p>
                         <div className="flex gap-3">
@@ -111,13 +118,13 @@ const dashboard = () => {
 
                     </div>
 
-                    <div className="bg-white min-h-20 md:w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
-                        <div className='flex items-center justify-center mt-4 gap-4 text-lg cursor-pointer'>
+                    <div className="bg-white h-60 overflow-y-auto md:w-[30vw] md:h-[60vh] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                        <div className='flex sticky top-0 items-center justify-center mt-4 gap-4 text-lg cursor-pointer'>
                             <span onClick={handlebest} className={`px-2 text-center text-base md:text-lg rounded-xl ${best ? "bg-black text-white" : "bg-white"}`}>My Best Performing</span>
                             <span onClick={handleworst} className={`px-2 text-center text-base md:text-lg rounded-xl ${worst ? "bg-black text-white" : "bg-white"}`}>My Worst Performing</span>
                         </div>
-                        <div>
-                            {best && (
+                        <div className='overflow-y-auto' >
+                            {best ? (
                                 <div className='gap-4'>
                                     {best_hold.map((value, index) => (
                                         <Link to={`/stocks/${value.stock}`} key={index}>
@@ -136,9 +143,9 @@ const dashboard = () => {
                                         </Link>
                                     ))}
                                 </div>
-                            )
+                            ):(<div className='text-center mt-10 font-medium'>No holdings found</div>)
                             }
-                            {worst && (
+                            {worst ? (
                                 <div className='gap-4'>
                                     {worst_hold.map((value, index) => (
                                         <Link to={`/stocks/${value.stock}`} key={index}>
@@ -157,19 +164,22 @@ const dashboard = () => {
                                         </Link>
                                     ))}
                                 </div>
-                            )
+                            ):(<div className='text-center mt-10 font-medium'>No holdings found</div>)
                             }
                         </div>
                     </div>
 
-                    <div className="bg-white min-h-20 md:w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                    <div className="bg-white overflow-x-hidden overflow-y-auto h-60 md:w-[30vw] md:h-[60vh] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
                         <div className="flex items-center">
 
                             <p className="mt-4 ml-5 text-lg align-middle">Watchlist</p>
                             <button className='mt-4 ml-auto mr-10 cursor-pointer rounded-sm' onClick={handleAddToWatchlist} > <Plus /></button>
 
                         </div>
-                        <div className='overflow-x-hidden overflow-y-auto'>
+                        <div>
+                            {wishlist_items.length === 0 && (
+                                <div className='text-center mt-10 font-medium'>Your watchlist is currently empty!</div>
+                            )}
                             {wishlist_items.map((item, index) => (
                                 <Link to={`/stocks/${item.stock}`} key={index}>
                                     <div className='bg-white font-medium text-base mx-5 mt-5 cursor-pointer'>

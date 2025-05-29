@@ -217,7 +217,7 @@ const stockdetail = () => {
 
         <div className='mt-5 flex justify-center '>
 
-          <div className='ml-5 bg-white w-[90vw] h-[15vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
+          <div className='mx-5 bg-white w-[90vw] h-[15vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
             <div className='flex items-center gap-3'>
               <div className='ml-5 mt-5 text-4xl font-medium'>₹{data?.currentPrice.NSE}</div>
               <div className={`mt-3 ml-[-7px] text-xl ${data?.percentChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>{data?.percentChange}%</div>
@@ -228,9 +228,9 @@ const stockdetail = () => {
 
 
 
-        <div className='my-5 flex items-center w-screen'>
+        <div className='my-5 flex flex-col md:flex-row gap-3 items-center w-screen'>
 
-          <div className='ml-5 bg-white w-[60vw] h-[55vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
+          <div className='mx-5 md:ml-5 bg-white w-[90vw] md:w-[60vw] h-[50vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
             <div className="font-semibold text-xl ml-5 mt-5">Key Metrics</div>
             <div className='grid grid-cols-4 gap-14 ml-5 mt-5 overflow-y-scroll'>
               <div>
@@ -275,7 +275,7 @@ const stockdetail = () => {
             </div>
           </div>
 
-          <div className='ml-auto mr-7 bg-white w-[30%] h-[55vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500 flex-col'>
+          <div className='md:ml-auto md:mr-7 mx-5 bg-white w-[90vw] md:w-[30%] h-[50vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500 flex-col'>
             <div className="font-semibold text-xl m-3">Your Holdings</div>
             {holding ?
               (
@@ -330,8 +330,8 @@ const stockdetail = () => {
 
         </div>
 
-        <div className='flex justify-center mt-5 gap-3'>
-          <div className='w-[60vw] rounded-md border-solid border-[1px] border-gray-300 ml-5 mr-3'>
+        <div className='flex flex-col-reverse md:flex-row justify-center mt-5 gap-3'>
+          <div className='w-[90vw] mx-5 md:w-[60vw] rounded-md border-solid border-[1px] border-gray-300 md:ml-5 md:mr-3'>
             <div className='bg-gray-200 flex gap-3 text-center'>
               <div className="ml-auto px-14 py-1 my-1 hover:cursor-pointer rounded-sm" onClick={handlenewsclick} style={{ background: news ? "white" : "none" }}>News</div>
               <div className="mr-auto px-14 py-1 my-1 hover:cursor-pointer rounded-sm" onClick={handleaboutclick} style={{ background: about ? "white" : "none" }}>About</div>
@@ -354,7 +354,7 @@ const stockdetail = () => {
             </div>
 
           </div>
-          <div className='ml-auto mr-7 bg-white w-[30vw] h-[55vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
+          <div className='md:ml-auto md:mr-7 bg-white w-[90vw] mx-5 md:w-[30vw] h-[55vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
             <div className='font-semibold text-xl ml-5 mt-5 overflow-y-auto'>Similar Stocks</div>
             {Array.isArray(data?.companyProfile?.peerCompanyList) &&
               data.companyProfile.peerCompanyList.map((peer, index) => (

@@ -34,8 +34,8 @@ const Navbar = forwardRef((props, ref) => {
         <div className="bg-white box-border w-screen shadow-md">
             <div className="flex items-center justify-between h-16 px-4 md:px-0">
                 <div className="flex items-center">
-                    <div className="px-3 md:px-12 text-lg md:text-2xl font-medium">Stoxy</div>
-                    {/* Desktop links */}
+                    <NavLink to="/home"><div className="px-3 md:px-12 text-lg md:text-2xl font-medium">Stoxy</div></NavLink>
+                    
                     <ul className="hidden md:flex list-none items-center">
                         <li className="text-md md:text-lg px-3 md:px-6">
                             <NavLink to="/home" className={({ isActive }) =>
@@ -58,7 +58,6 @@ const Navbar = forwardRef((props, ref) => {
                     </ul>
                 </div>
 
-                {/* Search bar: always visible */}
                 <div className="flex ml-auto mr-5 px-2 md:px-0">
                     <div className="relative flex justify-center items-center">
                         <input
@@ -92,20 +91,16 @@ const Navbar = forwardRef((props, ref) => {
                     </div>
                 </div>
 
-                {/* Profile icon */}
                 <div className="flex items-center gap-4 pr-4 md:pr-12">
-                    {/* Hamburger menu for mobile */}
                     <div className="md:hidden text-xl" onClick={toggleMenu}>
                         {menuOpen ? <FaTimes /> : <FaBars />}
                     </div>
-                    {/* Desktop profile icon */}
                     <div className="hidden md:block">
                         <Link to="/myprofile"><FaUser /></Link>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile menu */}
             {menuOpen && (
                 <ul className="flex flex-col md:hidden list-none px-4 py-2 gap-2">
                     <li>
@@ -126,7 +121,6 @@ const Navbar = forwardRef((props, ref) => {
                             Transactions
                         </NavLink>
                     </li>
-                    {/* Mobile profile icon */}
                     <li>
                         <NavLink to="/myprofile" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
                             isActive ? "bg-[#1d1d1d] text-white rounded-md p-1 block" : "hover:font-medium block"}>

@@ -40,7 +40,7 @@ const transactions = () => {
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((value, index) => (
               <ul className="grid grid-cols-5 text-xs md:text-lg text-center font-semibold py-2 " key={index}>
-                <li className='text-lg'>{dayjs(value.date).format('DD-MM-YYYY')}</li>
+                <li className='text-sm md:text-lg'>{dayjs(value.date).format('DD-MM-YYYY')}</li>
                 <li className='font-normal'>{value.tid}</li>
                 <li>
                   <span className={`px-2 py-1 rounded-lg ${value.type == 'Buy' ? 'text-green-500' : 'text-red-500'} ${value.type == 'Buy' ? 'bg-green-200' : 'bg-red-200'}`}>

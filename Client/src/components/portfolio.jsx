@@ -80,7 +80,7 @@ const Portfolio = () => {
                                     <li>₹{Number(value.currentprice.toFixed(2))}</li>
                                     <li>₹{Number(value.investedamount.toFixed(2))}</li>
                                     <li className={`font-bold ${parseInt((value.quantity * value.currentprice) - value.investedamount) >= 0 ? "text-green-600" : "text-red-600"}`}>
-                                        ₹{Number(((value.quantity * value.currentprice) - value.investedamount).toFixed(2))} <span className={`font-normal ml-2 px-2 rounded-lg ${parseInt((value.quantity * value.currentprice) - value.investedamount) >= 0 ? "bg-green-100" : "bg-red-100"}`}> {value.total_percent_change}%</span>
+                                        ₹{Number(((value.quantity * value.currentprice) - value.investedamount).toFixed(2))} <span className={`font-normal ml-2 px-1 md:px-2 rounded-lg ${parseInt((value.quantity * value.currentprice) - value.investedamount) >= 0 ? "bg-green-100" : "bg-red-100"}`}> {value.total_percent_change}%</span>
                                     </li>
                                 </ul>
                             </Link>
