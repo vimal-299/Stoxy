@@ -10,7 +10,7 @@ const navbar = forwardRef((props,ref) => {
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/allstocks')  
+        axios.get('https://stoxy.onrender.com/allstocks')  
         .then(response => {
             setstocks(response.data)
         })

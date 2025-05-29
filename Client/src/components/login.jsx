@@ -12,7 +12,7 @@ const login = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault()
-    axios.post("http://localhost:3000/user-login", { email, password })
+    axios.post("https://stoxy.onrender.com/user-login", { email, password })
       .then(result => {
         if (result.data.token) {
           login(result.data.token);

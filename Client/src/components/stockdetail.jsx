@@ -16,7 +16,7 @@ const stockdetail = () => {
   const [realprice, setrealprice] = useState()
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/stock/${companyname}`)
+    axios.get(`https://stoxy.onrender.com/api/stock/${companyname}`)
       .then(response => { setdata(response.data), setfullname(response.data.companyName), setrealprice(response.data.currentPrice.NSE) })
   }, [companyname])
 
@@ -55,7 +55,7 @@ const stockdetail = () => {
   useEffect(() => {
     if (!token) return; 
 
-    axios.get('http://localhost:3000/wishlist', {
+    axios.get('https://stoxy.onrender.com/wishlist', {
       params: { stock: companyname, fullname: fullname },
       headers: {
         Authorization: `Bearer ${token}`
@@ -76,7 +76,7 @@ const stockdetail = () => {
     setadded(newState);
 
     if (!added) {
-      axios.post('http://localhost:3000/add-to-wishlist',
+      axios.post('https://stoxy.onrender.com/add-to-wishlist',
         { stock: companyname, fullname: fullname },
         {
           headers: {
@@ -87,7 +87,7 @@ const stockdetail = () => {
       .catch(error => { alert("Error in adding to wishlist , please try again"); });
 
     } else {
-      axios.delete('http://localhost:3000/delete-from-wishlist', {
+      axios.delete('https://stoxy.onrender.com/delete-from-wishlist', {
         data: { stock: companyname, fullname: fullname },
         headers: {
           Authorization: `Bearer ${token}`
@@ -102,7 +102,7 @@ const stockdetail = () => {
     try {
       
       await axios.post(
-        'http://localhost:3000/add-to-portfolio',
+        'https://stoxy.onrender.com/add-to-portfolio',
         {
           stock: companyname,
           fullname: fullname,
@@ -119,7 +119,7 @@ const stockdetail = () => {
       )
 
       await axios.post(
-        'http://localhost:3000/buy-transaction',
+        'https://stoxy.onrender.com/buy-transaction',
         {
           stock: fullname,
           price: Number(buy_price),
@@ -132,7 +132,7 @@ const stockdetail = () => {
         }
       )
 
-      const response = await axios.get('http://localhost:3000/my-holdings', {
+      const response = await axios.get('https://stoxy.onrender.com/my-holdings', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -156,7 +156,7 @@ const stockdetail = () => {
 
     try {
 
-      await axios.delete('http://localhost:3000/remove-from-portfolio', {
+      await axios.delete('https://stoxy.onrender.com/remove-from-portfolio', {
         data: {
           stock: companyname,
           buyprice: Number(sell_price),
@@ -168,7 +168,7 @@ const stockdetail = () => {
         }
       });
 
-      await axios.post('http://localhost:3000/sell-transaction', {
+      await axios.post('https://stoxy.onrender.com/sell-transaction', {
         stock: fullname,
         price: Number(sell_price),
         quantity: Number(sell_quantity)

@@ -9,7 +9,7 @@ const myprofile = () => {
     const { token } = useContext(AuthContext)
     const [user, setuser] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:3000/user-profile', {
+        axios.get('https://stoxy.onrender.com/user-profile', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

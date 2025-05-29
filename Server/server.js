@@ -18,7 +18,7 @@ app.use(express.json())
 dotenv.config();
 
 const corsoptions = {
-  origin: ["http://localhost:5173"]
+  origin: ["https://stoxy-fawn.vercel.app/"]
 }
 app.use(cors(corsoptions))
 

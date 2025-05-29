@@ -10,7 +10,7 @@ const signup = () => {
 
   const handlesubmit = (e) => {
   e.preventDefault();
-  axios.post("http://localhost:3000/user-signup", { name, email, password })
+  axios.post("https://stoxy.onrender.com/user-signup", { name, email, password })
     .then(result => {
       if (result.data.message === "User created") {
         alert("Signup successful!");

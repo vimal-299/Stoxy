@@ -10,7 +10,7 @@ const transactions = () => {
   const [transactions, settransactions] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3000/all-transactions', {
+    axios.get('https://stoxy.onrender.com/all-transactions', {
       headers: {
         Authorization: `Bearer ${token}`
       }

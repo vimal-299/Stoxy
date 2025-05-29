@@ -16,7 +16,7 @@ const Portfolio = () => {
     
     useEffect(() => {
         try {
-            axios.get('http://localhost:3000/my-holdings', {
+            axios.get('https://stoxy.onrender.com/my-holdings', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
