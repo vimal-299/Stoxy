@@ -28,18 +28,18 @@ const login = () => {
   };
 
   return (
-    <div className='h-screen flex items-center justify-center bg-[#F7F6F9]'>
+    <div className='h-screen flex flex-col md:flex-row items-center justify-center bg-[#F7F6F9]'>
 
-      <div className="flex flex-col items-center justify-center w-[30vw] h-[70vh] border-solid border-[2px] border-gray-300">
+      <div className="flex flex-col items-center justify-center h-[40vh] w-[80vw] md:w-[40vw] md:h-[70vh] border-solid border-[2px] border-gray-300">
         <form onSubmit={handlesubmit}>
-          <h1 className='text-2xl font-bold'>Welcome Back</h1>
+          <h1 className='text-2xl text-center font-bold'>Welcome Back</h1>
           <input className='block m-4 bg-[#F7F6F9] border-b-2' type="text" placeholder='Enter your email' onChange={(e) => { setemail(e.target.value) }} />
           <input className='block m-4 bg-[#F7F6F9] border-b-2' type="text" placeholder='Enter your password' onChange={(e) => { setpassword(e.target.value) }} />
-          <button className='bg-white rounded-lg px-4 py-4 m-8'>Login</button>
+          <button className='bg-white rounded-lg px-4 py-2 mx-auto flex'>Login</button>
         </form>
       </div>
 
-      <div className="h-[70vh] w-[30vw] bg-white flex flex-col items-center justify-center border-solid border-[2px] border-gray-300">
+      <div className="h-[40vh] w-[80vw] md:w-[40vw] md:h-[70vh] bg-white flex flex-col items-center justify-center border-solid border-[2px] border-gray-300">
         <h3 className='journey'>Let's Start the Journey</h3>
         <p>New to this site ?</p>
         <Link to="/"><button className='px-3 py-2 bg-black text-white rounded-md mx-4 my-8'>Sign-up</button></Link>

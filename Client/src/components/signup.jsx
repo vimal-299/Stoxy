@@ -28,20 +28,20 @@ const signup = () => {
 };
 
   return (
-    <div className='h-screen flex items-center justify-center bg-[#F7F6F9]'> 
-      <div className="flex flex-col items-center justify-center w-[30vw] h-[70vh] border-solid border-[2px] border-gray-300">
-        <h1 className='font-bold text-4xl mb-5'>Welcome to Stoxy</h1>
-        <h3 className='ml-3 mb-8 text-sm'>The easy way to keep track of your portfolio and transactions</h3>
+    <div className='h-screen flex flex-col md:flex-row items-center justify-center bg-[#F7F6F9]'> 
+      <div className="flex flex-col items-center justify-center h-[40vh] w-[80vw] md:w-[40vw] md:h-[70vh] border-solid border-[2px] border-gray-300">
+        <h1 className='font-bold text-2xl md:text-4xl mb-5'>Welcome to Stoxy</h1>
+        <h3 className='ml-3 mb-8 text-xs text-center md:text-sm'>The easy way to keep track of your portfolio and transactions</h3>
         <p>Already have an account ?</p>
         <Link to="/login"><button className='px-3 py-1 bg-black text-white rounded-md mx-4 my-2'>Login</button></Link>
       </div>
-      <div className="h-[70vh] w-[30vw] bg-white flex flex-col items-center justify-center border-solid border-[2px] border-gray-300">
+      <div className="h-[40vh] md:h-[70vh] w-[80vw] md:w-[40vw] bg-white flex flex-col items-center justify-center border-solid border-[2px] border-gray-300">
         <form onSubmit={handlesubmit} className='gap-8'>
           <h1 className='font-bold text-2xl'>Create Account</h1>
           <input className='block m-4 border-b-2' type="text" placeholder='Enter your name' required onChange={(e)=>{setname(e.target.value)}} />
           <input className='block m-4 border-b-2' type="email" placeholder='Enter your email id' required onChange={(e)=>{setemail(e.target.value)}} />
           <input className='block m-4 border-b-2' type="password" placeholder='Enter your password' required pattern=".*[A-Z].*" title="Password must contain at least one uppercase letter" onChange={(e)=>{setpassword(e.target.value)}} />
-          <button className='px-4 py-2 m-8 rounded-lg bg-[#F7F6F9]'>Sign Up</button>
+          <button className='px-4 py-2 mx-auto flex rounded-lg bg-[#F7F6F9]'>Sign Up</button>
         </form>
       </div>
 

@@ -79,7 +79,7 @@ const dashboard = () => {
                 </p>
 
                 <div className="w-[90vw] h-[20vh] mt-2 p-2 flex justify-center justify-self-center items-center shadow-md bg-white border-solid border-[1px] border-gray-300 rounded-lg">
-                    <div className="stockcards flex overflow-x-scroll items-center scrollbar-hidden self-center scroll-smooth">
+                    <div className="stockcards gap-4 flex overflow-x-scroll items-center scrollbar-hidden self-center scroll-smooth">
                         {holdings.map((value, index) => (
                             <Link to={`/stocks/${value.stock}`} key={index}>
                                 <Stockcard
@@ -94,30 +94,27 @@ const dashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-center m-5 h-[58vh] gap-6">
+                <div className="flex flex-col md:flex-row justify-center mx-8 md:m-5 h-[58vh] gap-6">
 
-                    <div className="bg-white w-[30vw] rounded-lg p-2 border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                    <div className="bg-white md:w-[30vw] rounded-lg p-2 border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
 
-                        <p className="text-[1.5vw] p-4">Current</p>
+                        <p className="text-lg p-4">Current</p>
                         <div className="flex gap-3">
-                            <div className="w-[25vw] bg-[#6425FE] text-white text-[2vw] rounded-lg p-3 pl-5">₹{Number(current.toFixed(2))}</div>
-                            <div className="flex items-center rounded-lg p-3 text-[2vw]" style={{ background: (current >= invested) ? "#C7FFA5" : "#fa6060" }}>{percent}%</div>
+                            <div className="w-full md:w-[25vw] bg-[#6425FE] text-white text-lg rounded-lg p-3 pl-5">₹{Number(current.toFixed(2))}</div>
+                            <div className="flex items-center rounded-lg p-3 text-lg" style={{ background: (current >= invested) ? "#C7FFA5" : "#fa6060" }}>{percent}%</div>
                         </div>
 
-                        <p className="mt-5 p-2 text-[1.5vw]">Invested</p>
-                        <div className="flex items-center pl-5 py-3 bg-[#1d1d1d] text-white rounded-lg text-[2vw]">₹{invested}
-                            <div className="flex items-center justify-center bg-[#6425FE] ml-auto mr-3 rounded-lg w-12 h-12 transition-all duration-[1300ms]
-    hover:-rotate-45
-    hover:shadow-[0_0_15px_5px_rgba(100,37,254,0.6)]
-    hover:animate-pulse-bg"><Link to="/portfolio"><FaArrowRight /></Link></div>
+                        <p className="mt-3 md:mt-5 p-2 text-lg">Invested</p>
+                        <div className="flex items-center pl-5 py-3 bg-[#1d1d1d] text-white rounded-lg text-lg">₹{invested}
+                            <div className="flex items-center justify-center bg-[#6425FE] ml-auto mr-5 rounded-lg md:w-12 w-8 h-8 md:h-12 transition-all duration-[1300ms] hover:-rotate-45 hover:shadow-[0_0_15px_5px_rgba(100,37,254,0.6)] hover:animate-pulse-bg"><Link to="/portfolio"><FaArrowRight /></Link></div>
                         </div>
 
                     </div>
 
-                    <div className="bg-white w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                    <div className="bg-white min-h-20 md:w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
                         <div className='flex items-center justify-center mt-4 gap-4 text-lg cursor-pointer'>
-                            <span onClick={handlebest} className={`px-2 text-lg rounded-xl ${best ? "bg-black text-white" : "bg-white"}`}>My Best Performing</span>
-                            <span onClick={handleworst} className={`px-2 text-lg rounded-xl ${worst ? "bg-black text-white" : "bg-white"}`}>My Worst Performing</span>
+                            <span onClick={handlebest} className={`px-2 text-center text-base md:text-lg rounded-xl ${best ? "bg-black text-white" : "bg-white"}`}>My Best Performing</span>
+                            <span onClick={handleworst} className={`px-2 text-center text-base md:text-lg rounded-xl ${worst ? "bg-black text-white" : "bg-white"}`}>My Worst Performing</span>
                         </div>
                         <div>
                             {best && (
@@ -165,7 +162,7 @@ const dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
+                    <div className="bg-white min-h-20 md:w-[30vw] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
                         <div className="flex items-center">
 
                             <p className="mt-4 ml-5 text-lg align-middle">Watchlist</p>

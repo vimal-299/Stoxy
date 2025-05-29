@@ -27,7 +27,7 @@ const transactions = () => {
         <h1 className='font-medium text-xl m-3 mt-5 ml-5'>Transaction History</h1>
 
         <div className='mt-5 w-screen bg-white  rounded-md border-solid border-[1px] border-gray-300'>
-          <ul className="grid grid-cols-5 text-center font-semibold py-2 text-gray-600">
+          <ul className="grid grid-cols-5 text-xs md:text-lg text-center font-semibold py-2 text-gray-600">
             <li>Date</li>
             <li>Transaction Id</li>
             <li>Type</li>
@@ -39,7 +39,7 @@ const transactions = () => {
             .slice()
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((value, index) => (
-              <ul className="grid grid-cols-5 text-center font-semibold py-2 " key={index}>
+              <ul className="grid grid-cols-5 text-xs md:text-lg text-center font-semibold py-2 " key={index}>
                 <li className='text-lg'>{dayjs(value.date).format('DD-MM-YYYY')}</li>
                 <li className='font-normal'>{value.tid}</li>
                 <li>

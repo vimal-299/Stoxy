@@ -26,16 +26,16 @@ const myprofile = () => {
 
     return (
         <>
-            <div className='bg-[#F7F6F9] h-screen'>
-                <Navbar title="My Profile" />
+            <div className='bg-[#F7F6F9] min-h-screen md:h-screen w-screen'>
+                <Navbar/>
                 <div className='ml-5 mt-5 font-semibold text-3xl'>My Profile</div>
-                <div className='flex gap-10 mt-10'>
-                    <div className='bg-white flex flex-col gap-2 items-center justify-center ml-auto border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500 h-[50vh] w-[25vw]'>
+                <div className='w-screen flex flex-col items-center justify-center md:flex-row gap-10 mt-10'>
+                    <div className='bg-white flex flex-col gap-2 items-center justify-center md:ml-auto border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500 h-[30vh] w-[55vw] md:h-[50vh] md:w-[25vw]'>
                         <Avatar name={user.name} />
                         <div className='font-medium text-2xl'>{user.name}</div>
                     </div>
 
-                    <div className='bg-white mr-auto border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500 h-[50vh] w-[50vw] px-5'>
+                    <div className='bg-white md:mr-auto border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500 h-[30vh] w-[55vw] md:h-[50vh] md:w-[50vw] px-5'>
                         <div className='mt-5 font-semibold text-lg'>Personal Information</div>
                         <div className='mt-5 font-medium'>Name</div>
                         <div className='px-3 py-1 border-solid border-[1px] border-gray-300 w-full'>{user.name}</div>
