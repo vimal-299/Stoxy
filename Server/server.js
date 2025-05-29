@@ -23,16 +23,20 @@ const corsoptions = {
 app.use(cors(corsoptions))
 
 const PORT = process.env.PORT
-const MONGOURL = process.env.MONGOURL
 const APIKEY = process.env.APIKEY
 const JWT_SECRET = process.env.JWT_SECRET
-
-mongoose.connect(MONGOURL).then(() => {
-  console.log("database connected successfully")
-  app.listen(PORT, () => {
-    console.log(`Stoxy listening on port ${PORT}`)
-  })
-}).catch((error) => { console.log(error) })
+const uri = process.env.MONGOURL;
+mongoose.connect(process.env.MONGOURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() =>
+    console.log('Connected to MongoDB Atlas!'),
+    app.listen(PORT, () => {
+      console.log(`Stoxy listening on port ${PORT}`)
+    })
+  )
+  .catch((err) => console.error('MongoDB Atlas connection error:', err));
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -262,7 +266,7 @@ const fetchAndUpdatePrice = async (stockName, stockId) => {
     const latestPercent = data?.percentChange
 
     if (latestPrice && latestPercent) {
-      await PortfolioModel.updateOne({ _id: stockId }, { currentprice: latestPrice },{day_percent_change: latestPercent});
+      await PortfolioModel.updateOne({ _id: stockId }, { currentprice: latestPrice }, { day_percent_change: latestPercent });
     }
   } catch (err) {
     console.error(`Error updating ${stockName}:`, err.response?.data || err.message);
@@ -313,13 +317,13 @@ app.post("/user-login", async (req, res) => {
   res.json({ token });
 });
 
-app.get("/user-profile",authMiddleware,async (req,res) => {
-  try{
+app.get("/user-profile", authMiddleware, async (req, res) => {
+  try {
     const userId = req.user.userId;
-    const user = await userModel.find({_id: userId})
+    const user = await userModel.find({ _id: userId })
     res.json(user)
   }
-  catch(error){
+  catch (error) {
     res.json(error.message)
     console.log(error)
   }
