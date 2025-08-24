@@ -1,52 +1,89 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
-const signup = () => {
-  const [name, setname] = useState()
-  const [email, setemail] = useState()
-  const [password, setpassword] = useState()
-  const navigate = useNavigate()
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Loader from './Loader';
 
-  const handlesubmit = (e) => {
-  e.preventDefault();
-  axios.post("https://stoxy.onrender.com/user-signup", { name, email, password })
-    .then(result => {
-      if (result.data.message === "User created") {
-        alert("Signup successful!");
-        navigate('/login');
-      } else if (result.data.message === "Email already exists") {
-        alert("This email is already registered.");
-      } else {
-        alert("Signup failed.");
-      }
-    })
-    .catch(err => {
-      console.error("Signup error:", err);
-      alert("Something went wrong. Please try again later.");
-    });
-};
+const Signup = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    axios.post("https://stoxy.onrender.com/user-signup", { name, email, password })
+      .then(result => {
+        setLoading(false);
+        if (result.data.message === "User created") {
+          alert("Signup successful!");
+          navigate('/login');
+        } else if (result.data.message === "Email already exists") {
+          alert("This email is already registered.");
+        } else {
+          alert("Signup failed.");
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        alert("Something went wrong. Please try again later.");
+      });
+  };
 
   return (
-    <div className='h-screen flex flex-col md:flex-row items-center justify-center bg-[#F7F6F9]'> 
-      <div className="flex flex-col items-center justify-center h-[40vh] w-[80vw] md:w-[40vw] md:h-[70vh] border-solid border-[2px] border-gray-300">
-        <h1 className='font-bold text-2xl md:text-4xl mb-5'>Welcome to Stoxy</h1>
-        <h3 className='ml-3 mb-8 text-xs text-center md:text-sm'>The easy way to keep track of your portfolio and transactions</h3>
-        <p>Already have an account ?</p>
-        <Link to="/login"><button className='px-3 py-1 bg-black text-white rounded-md mx-4 my-2'>Login</button></Link>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400">
+      {loading && <Loader />}
+      <div className="bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden w-full max-w-4xl">
+        <div className="hidden md:flex flex-col justify-center items-center p-8 md:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-600 text-white">
+          <h2 className="text-2xl font-bold mb-2">Already have an account?</h2>
+          <p className="mb-6">Sign in to manage your portfolio and wishlist!</p>
+          <Link to="/login">
+            <button className="px-6 py-2 bg-white text-indigo-700 rounded-lg font-semibold hover:bg-indigo-100 transition">Login</button>
+          </Link>
+        </div>
+        <div className="flex flex-col justify-center items-center p-8 md:w-1/2 bg-gradient-to-br from-indigo-100 to-white">
+          <h1 className="text-3xl font-bold text-indigo-700 mb-2">Create Account</h1>
+          <p className="mb-8 text-indigo-500">Start your paper trading journey with Stoxy</p>
+          <form onSubmit={handleSubmit} className="w-full max-w-xs space-y-4">
+            <input
+              className="w-full px-4 py-2 border-b-2 border-indigo-300 focus:outline-none focus:border-indigo-500 bg-transparent text-indigo-700 placeholder-indigo-400"
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+            />
+            <input
+              className="w-full px-4 py-2 border-b-2 border-indigo-300 focus:outline-none focus:border-indigo-500 bg-transparent text-indigo-700 placeholder-indigo-400"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+            <input
+              className="w-full px-4 py-2 border-b-2 border-indigo-300 focus:outline-none focus:border-indigo-500 bg-transparent text-indigo-700 placeholder-indigo-400"
+              type="password"
+              placeholder="Password (at least 1 uppercase letter)"
+              value={password}
+              pattern={".*[A-Z].*"}
+              title="Password must contain at least one uppercase letter"
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="w-full py-2 mt-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
-      <div className="h-[40vh] md:h-[70vh] w-[80vw] md:w-[40vw] bg-white flex flex-col items-center justify-center border-solid border-[2px] border-gray-300">
-        <form onSubmit={handlesubmit} className='gap-8'>
-          <h1 className='font-bold text-2xl'>Create Account</h1>
-          <input className='block m-4 border-b-2' type="text" placeholder='Enter your name' required onChange={(e)=>{setname(e.target.value)}} />
-          <input className='block m-4 border-b-2' type="email" placeholder='Enter your email id' required onChange={(e)=>{setemail(e.target.value)}} />
-          <input className='block m-4 border-b-2' type="password" placeholder='Enter your password' required pattern=".*[A-Z].*" title="Password must contain at least one uppercase letter" onChange={(e)=>{setpassword(e.target.value)}} />
-          <button className='px-4 py-2 mx-auto flex rounded-lg bg-[#F7F6F9]'>Sign Up</button>
-        </form>
-      </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default signup
+export default Signup;

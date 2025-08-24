@@ -6,7 +6,8 @@ import Portfolio from "./components/portfolio"
 import Transactions from "./components/transactions"
 import Stockdetail from "./components/stockdetail"
 import Signup from './components/signup';
-import Login from './components/login'
+import Login from "./components/login"
+import Landing from './components/Landing';
 import { ValuesProvider } from './components/contexts';
 import { AuthProvider } from './components/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -18,7 +19,8 @@ function App() {
       <AuthProvider>
         <ValuesProvider>
           <Routes>
-            <Route path="/" element={<Signup />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/myprofile" element={<PrivateRoute><Myprofile /></PrivateRoute>} />

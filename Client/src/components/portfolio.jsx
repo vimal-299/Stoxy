@@ -4,6 +4,7 @@ import { InvestedContext, CurrentContext, PercentContext, HoldingsContext } from
 import { Link } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
+import Loader from './Loader';
 
 const Portfolio = () => {
     const { invested, setInvested } = useContext(InvestedContext);
@@ -13,53 +14,52 @@ const Portfolio = () => {
     const {token} = useContext(AuthContext);
 
     const [pl, setpl] = useState(0)
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        try {
-            axios.get('https://stoxy.onrender.com/my-holdings', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(response => { setHoldings(response.data) })
-        } catch (error) {
-            console.error('Failed to fetch holdings:', error);
-        }
+        setLoading(true);
+        const fetchHoldings = async () => {
+            try {
+                const response = await axios.get('https://stoxy.onrender.com/my-holdings', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setHoldings(response.data);
+            } catch (error) {
+                console.error('Failed to fetch holdings:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchHoldings();
     }, []);
 
     useEffect(() => {
         setpl(current - invested)
     }, [holdings])
 
+    
+    
     return (
         <>
-            <div className="bg-[#F7F6F9] w-screen h-screen">
-
+            <div className="min-h-screen w-screen bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400">
+                {loading && <Loader />}
                 <Navbar />
-
-                <h1 className='font-medium text-xl m-3 mt-5 ml-5'>My Portfolio</h1>
-
+                <h1 className='font-medium text-xl m-3 mt-5 ml-5 text-white drop-shadow'>My Portfolio</h1>
                 <div className='flex flex-col md:flex-row gap-6 justify-center text-gray-700'>
-
                     <div className='mx-auto w-[80vw] h-20 md:mx-0 md:h-[20vh] md:w-[26vw] rounded-md border-solid border-[1px] border-gray-300 bg-white box-border'>
                         <h1 className='mt-2 md:mt-6 ml-4'>Current value</h1>
                         <h3 className='ml-5 mt-2 text-lg text-black font-bold'>₹{Number(current.toFixed(2))}</h3>
                     </div>
-
                     <div className='mx-auto w-[80vw] h-20 md:mx-0 md:h-[20vh] md:w-[26vw] rounded-md border-solid border-[1px] border-gray-300 bg-white'>
                         <h1 className='mt-2 md:mt-6 ml-4'> Total Invested</h1>
                         <h3 className='ml-5 mt-2 text-lg text-black font-bold'>₹{invested}</h3>
-
                     </div>
-
                     <div className='mx-auto w-[80vw] h-20 md:mx-0 md:h-[20vh] md:w-[26vw] rounded-md border-solid border-[1px] border-gray-300 bg-white'>
                         <h1 className='mt-2 md:mt-6 ml-4'>Total Returns</h1>
                         <h3 className='ml-5 mt-2 text-lg font-bold inline-flex align-middle' style={{ color: (pl) >= 0 ? "green" : "red" }}>₹{pl.toFixed(2)}</h3>
                         <h3 className={`ml-3 px-2 mt-2 text-base rounded-lg inline-flex align-middle ${pl>=0 ? "bg-green-100":"bg-red-100"}`}>{percent}%</h3>
                     </div>
-
                 </div>
-
                 <div className=' w-screen flex justify-center mt-8'>
                     <div className='w-96 overflow-x-auto md:w-[90vw] ml-2 rounded-md border-solid border-[1px] border-gray-300 bg-white mt-2'>
                         <h1 className='ml-5 my-4 text-xl font-normal'>My Holdings</h1>
@@ -86,12 +86,11 @@ const Portfolio = () => {
                             </Link>
                         ))}
                     </div>
-                    
                 </div>
-
             </div>
         </>
     )
+
 }
 
-export default Portfolio
+export default Portfolio;

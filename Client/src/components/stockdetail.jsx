@@ -6,18 +6,27 @@ import { HeartIcon } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
 import axios from 'axios'
 import { AuthContext } from './AuthContext';
+import Loader from './Loader';
 
 const stockdetail = () => {
   const { companyname } = useParams();
   const { token } = useContext(AuthContext);
 
   const [data, setdata] = useState(null)
+  const [loading, setLoading] = useState(true);
   const [fullname, setfullname] = useState()
   const [realprice, setrealprice] = useState()
 
   useEffect(() => {
+    setLoading(true);
     axios.get(`https://stoxy.onrender.com/api/stock/${companyname}`)
-      .then(response => { setdata(response.data), setfullname(response.data.companyName), setrealprice(response.data.currentPrice.NSE) })
+      .then(response => {
+        setdata(response.data);
+        setfullname(response.data.companyName);
+        setrealprice(response.data.currentPrice.NSE);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [companyname])
 
   const tickerid = data?.stockCorporateActionData.annualGeneralMeeting?.[0]?.tickerId;
@@ -193,10 +202,9 @@ const stockdetail = () => {
 
   return (
     <>
-
-      <div className={`w-screen h-full bg-[#F7F6F9] scrollbar-hidden ${buybox ? "blur-[0.5px]" : ""} transition-all mt-4`}>
+      {loading && <Loader />}
+      <div className={`w-screen h-full bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400 scrollbar-hidden ${buybox ? "blur-[0.5px]" : ""} transition-all mt-4 min-h-screen`}>
         <Navbar />
-
         <div className='flex items-center mt-5'>
 
           <div className='flex items-center'>

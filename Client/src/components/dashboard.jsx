@@ -7,10 +7,12 @@ import Stockcard from './stockcard'
 import { FaArrowRight } from 'react-icons/fa'
 import { Plus } from "lucide-react"
 import { AuthContext } from './AuthContext'
+import Loader from './Loader';
 
 const dashboard = () => {
     const colors = ["#D1FAE5", "#EDE9FE", "#FEF3C7", "#DCFCE7", "#FCE7F3"];
     const [wishlist_items, setwishlist_items] = useState([])
+    const [loading, setLoading] = useState(true);
     const [best, setbest] = useState(true)
     const [best_hold, setbest_hold] = useState([])
     const [worst, setworst] = useState(false)
@@ -31,27 +33,24 @@ const dashboard = () => {
     };
 
     useEffect(() => {
-        axios.get('https://stoxy.onrender.com/wishlist-items',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            .then((Response) => { setwishlist_items(Response.data) })
-            .catch((err) => console.error('unable to fetch wishlist-items', err))
-    }, [])
-
-    useEffect(() => {
-        try {
+        setLoading(true);
+        Promise.all([
+            axios.get('https://stoxy.onrender.com/wishlist-items', {
+                headers: { Authorization: `Bearer ${token}` }
+            }),
             axios.get('https://stoxy.onrender.com/my-holdings', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` }
             })
-                .then(response => { setHoldings(response.data) })
-        } catch (error) {
-            console.error('Failed to fetch holdings:', error);
-        }
+        ])
+        .then(([wishlistRes, holdingsRes]) => {
+            setwishlist_items(wishlistRes.data);
+            setHoldings(holdingsRes.data);
+            setLoading(false);
+        })
+        .catch((err) => {
+            setLoading(false);
+            console.error('unable to fetch data', err);
+        });
     }, []);
     useEffect(() => {
         const sortedHoldings = [...holdings].sort((a, b) => b.total_percent_change - a.total_percent_change);
@@ -69,21 +68,15 @@ const dashboard = () => {
         const sortedHoldings = [...holdings].sort((a, b) => a.total_percent_change - b.total_percent_change);
         setworst_hold(sortedHoldings);
     }
-    const mockholdings = [
-        { stock: "AAPL", fullname: "Apple Inc.", currentprice: 150, day_percent_change: 1.5 },
-        // { stock: "GOOGL", fullname: "Alphabet Inc.", currentprice: 2800, day_percent_change: -0.5 },
-        // { stock: "AMZN", fullname: "Amazon.com Inc.", currentprice: 3400, day_percent_change: 2.0 },
-        // { stock: "MSFT", fullname: "Microsoft Corporation", currentprice: 300, day_percent_change: 1.2 }
-    ];
 
     return (
-        <div className="min-h-screen h-full w-screen bg-[#F7F6F9]">
+        <div className="min-h-screen max-h-screen w-screen bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400">
+            {loading && <Loader />}
             <Navbar ref={searchInputRef} />
             <div>
-                <p className="ml-14 mt-3 text-lg">
+                <p className="ml-14 mt-3 text-lg text-white drop-shadow">
                     My stocks
                 </p>
-
                 <div className="w-[90vw] h-[20vh] mt-2 p-2 flex justify-center justify-self-center items-center shadow-md bg-white border-solid border-[1px] border-gray-300 rounded-lg">
                     <div className="stockcards gap-4 flex overflow-x-scroll items-center scrollbar-hidden self-center scroll-smooth">
                         {holdings.length === 0 && (<div className='text-center text-gray-500'>Your portfolio is currently empty!</div>)}
@@ -100,24 +93,18 @@ const dashboard = () => {
                         ))}
                     </div>
                 </div>
-
                 <div className="flex mt-5 flex-col md:flex-row justify-center mx-8 md:m-5 gap-6">
-
                     <div className="bg-white md:w-[30vw] md:h-[60vh] rounded-lg p-2 border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
-
                         <p className="text-lg p-4">Current</p>
                         <div className="flex gap-3">
                             <div className="w-full md:w-[25vw] bg-[#6425FE] text-white text-lg rounded-lg p-3 pl-5">₹{Number(current.toFixed(2))}</div>
                             <div className="flex items-center rounded-lg p-3 text-lg" style={{ background: (current >= invested) ? "#C7FFA5" : "#fa6060" }}>{percent}%</div>
                         </div>
-
                         <p className="mt-3 md:mt-5 p-2 text-lg">Invested</p>
                         <div className="flex items-center pl-5 py-3 bg-[#1d1d1d] text-white rounded-lg text-lg">₹{invested}
                             <div className="flex items-center justify-center bg-[#6425FE] ml-auto mr-5 rounded-lg md:w-12 w-8 h-8 md:h-12 transition-all duration-[1300ms] hover:-rotate-45 hover:shadow-[0_0_15px_5px_rgba(100,37,254,0.6)] hover:animate-pulse-bg"><Link to="/portfolio"><FaArrowRight /></Link></div>
                         </div>
-
                     </div>
-
                     <div className="bg-white h-60 overflow-y-auto md:w-[30vw] md:h-[60vh] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
                         <div className='flex sticky top-0 items-center justify-center mt-4 gap-4 text-lg cursor-pointer'>
                             <span onClick={handlebest} className={`px-2 text-center text-base md:text-lg rounded-xl ${best ? "bg-black text-white" : "bg-white"}`}>My Best Performing</span>
@@ -168,13 +155,10 @@ const dashboard = () => {
                             }
                         </div>
                     </div>
-
                     <div className="bg-white overflow-x-hidden overflow-y-auto h-60 md:w-[30vw] md:h-[60vh] rounded-lg border-solid border-[1px] border-gray-300 shadow-md shadow-gray-500">
                         <div className="flex items-center">
-
                             <p className="mt-4 ml-5 text-lg align-middle">Watchlist</p>
                             <button className='mt-4 ml-auto mr-10 cursor-pointer rounded-sm' onClick={handleAddToWatchlist} > <Plus /></button>
-
                         </div>
                         <div>
                             {wishlist_items.length === 0 && (
