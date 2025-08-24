@@ -205,33 +205,27 @@ const stockdetail = () => {
       {loading && <Loader />}
       <div className={`w-screen h-full bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400 scrollbar-hidden ${buybox ? "blur-[0.5px]" : ""} transition-all mt-4 min-h-screen`}>
         <Navbar />
-        <div className='flex items-center mt-5'>
-
-          <div className='flex items-center'>
-            <div className='flex-col items-center'>
-              <div className='px-3 font-semibold text-2xl ml-5'>{data?.companyName}</div>
-              <div className='px-3 font-normal text-md ml-5 text-gray-500'>{companyname}</div>
+        <div className='flex flex-col md:flex-row items-center mt-8 gap-6 justify-between px-8'>
+          <div className='flex flex-col md:flex-row items-center gap-4'>
+            <div className='flex flex-col items-start bg-white/70 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg'>
+              <div className='font-extrabold text-3xl text-indigo-700 drop-shadow'>{data?.companyName}</div>
+              <div className='font-medium text-lg text-gray-500'>{companyname}</div>
             </div>
-            <div className='px-3 cursor-pointer text-red-500 ' onClick={handlenewwish} ><HeartIcon fill={added ? 'red' : 'none'} /></div>
+            <div className='ml-2 px-3 py-2 bg-white/70 rounded-full shadow cursor-pointer text-red-500 flex items-center' onClick={handlenewwish}>
+              <HeartIcon fill={added ? 'red' : 'none'} />
+              <span className='ml-2 text-sm'>{added ? 'Wishlisted' : 'Add to Wishlist'}</span>
+            </div>
           </div>
-
-          <div className='flex items-center ml-auto gap-3'>
-            <div className='px-3 py-1 bg-black text-white rounded-md hover:cursor-pointer hover:text-lg' onClick={() => { setbuybox(true) }}  >Buy</div>
-
-            <div className='px-3 py-1 bg-black text-white mr-10 rounded-md hover:cursor-pointer hover:text-lg' onClick={() => { setsellbox(true) }}>Sell</div>
+          <div className='flex gap-4 mt-4 md:mt-0'>
+            <button className='px-6 py-2 bg-indigo-700 text-white rounded-lg font-semibold shadow hover:bg-indigo-800 transition' onClick={() => setbuybox(true)}>Buy</button>
+            <button className='px-6 py-2 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition' onClick={() => setsellbox(true)}>Sell</button>
           </div>
-
         </div>
-
-        <div className='mt-5 flex justify-center '>
-
-          <div className='mx-5 bg-white w-[90vw] h-[15vh] border-solid border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500'>
-            <div className='flex items-center gap-3'>
-              <div className='ml-5 mt-5 text-4xl font-medium'>₹{data?.currentPrice.NSE}</div>
-              <div className={`mt-3 ml-[-7px] text-xl ${data?.percentChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>{data?.percentChange}%</div>
-            </div>
+        <div className='mt-8 flex justify-center'>
+          <div className='mx-5 bg-white/80 backdrop-blur-md w-[90vw] max-w-2xl h-[15vh] border border-indigo-200 rounded-2xl shadow-lg flex items-center gap-6 px-8'>
+            <div className='text-5xl font-bold text-indigo-700 drop-shadow'>₹{data?.currentPrice.NSE}</div>
+            <div className={`text-2xl font-semibold ${data?.percentChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>{data?.percentChange}%</div>
           </div>
-
         </div>
 
 

@@ -31,27 +31,26 @@ const Navbar = forwardRef((props, ref) => {
     };
 
     return (
-        <div className="bg-white box-border w-screen shadow-md">
-            <div className="flex items-center justify-between h-16 px-4 md:px-0">
+        <div className="bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400 box-border w-screen shadow-md">
+        <div className="flex items-center justify-between h-16 px-4 md:px-0 backdrop-blur-md bg-white/30 rounded-b-2xl shadow-lg">
                 <div className="flex items-center">
-                    <NavLink to="/home"><div className="px-3 md:px-12 text-lg md:text-2xl font-medium">Stoxy</div></NavLink>
-                    
+                    <NavLink to="/home"><div className="px-3 md:px-12 text-lg md:text-2xl font-bold tracking-tight text-indigo-700 drop-shadow">Stoxy</div></NavLink>
                     <ul className="hidden md:flex list-none items-center">
                         <li className="text-md md:text-lg px-3 md:px-6">
                             <NavLink to="/home" className={({ isActive }) =>
-                                isActive ? "bg-[#1d1d1d] text-white rounded-md p-1" : "hover:font-medium"}>
+                                isActive ? "bg-indigo-700 text-white rounded-md p-1 shadow" : "hover:font-medium hover:text-indigo-700"}>
                                 Home
                             </NavLink>
                         </li>
                         <li className="text-md px-3 md:px-6 md:text-lg">
                             <NavLink to="/portfolio" className={({ isActive }) =>
-                                isActive ? "bg-[#1d1d1d] text-white rounded-md p-1" : "hover:font-medium"}>
+                                isActive ? "bg-indigo-700 text-white rounded-md p-1 shadow" : "hover:font-medium hover:text-indigo-700"}>
                                 Portfolio
                             </NavLink>
                         </li>
                         <li className="text-md px-3 md:px-6 md:text-lg">
                             <NavLink to="/transactions" className={({ isActive }) =>
-                                isActive ? "bg-[#1d1d1d] text-white rounded-md p-1" : "hover:font-medium"}>
+                                isActive ? "bg-indigo-700 text-white rounded-md p-1 shadow" : "hover:font-medium hover:text-indigo-700"}>
                                 Transactions
                             </NavLink>
                         </li>
@@ -68,7 +67,7 @@ const Navbar = forwardRef((props, ref) => {
                             onChange={handleSearch}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setTimeout(() => setIsSearchFocused(false), 500)}
-                            className="py-2 px-4 w-full md:w-[20vw] text-sm border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-black"
+                            className="py-2 px-4 w-full md:w-[20vw] text-sm border border-indigo-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/70"
                         />
                         {isSearchFocused && (
                             <div className="absolute top-full mt-2 bg-white w-full md:w-64 border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto z-50">
@@ -102,7 +101,7 @@ const Navbar = forwardRef((props, ref) => {
             </div>
 
             {menuOpen && (
-                <ul className="flex flex-col md:hidden list-none px-4 py-2 gap-2">
+                <ul className="flex flex-col md:hidden list-none px-4 py-2 gap-2 bg-white/80 rounded-b-xl shadow-lg">
                     <li>
                         <NavLink to="/home" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
                             isActive ? "bg-[#1d1d1d] text-white rounded-md p-1 block" : "hover:font-medium block"}>
